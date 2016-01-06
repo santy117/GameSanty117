@@ -18,6 +18,7 @@ public class Juego extends Canvas implements Runnable{
 
 	
 	private Juego(){
+		
 		setPreferredSize(new Dimension(ANCHO, ALTO));
 		ventana = new JFrame(NOMBRE);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
