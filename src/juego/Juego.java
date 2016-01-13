@@ -3,26 +3,28 @@ package juego;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import control.*;
+
 public class Juego extends Canvas implements Runnable{
 	private static final long serialVersionUID= 1L;
-	private static final int ANCHO= 800;
-	private static final int ALTO= 600;
 	
 	private static volatile boolean enFuncionamiento=false;
 	private static final String NOMBRE = "Juego";
-	
+	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private static int aps=0;
 	private static int fps=0;
 	private static JFrame ventana;
 	private static Thread thread;
+	private static Teclado teclado;
 
 	
 	private Juego(){
 		
-		setPreferredSize(new Dimension(ANCHO, ALTO));
+		setPreferredSize(screenSize);
 		ventana = new JFrame(NOMBRE);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setResizable(false);
@@ -31,17 +33,22 @@ public class Juego extends Canvas implements Runnable{
 		ventana.pack();
 		ventana.setLocationRelativeTo(null);
 		ventana.setVisible(true);
+		teclado = new Teclado();
+		addKeyListener(teclado);
 		
 		}
+	
 	public static void main(String[] args){
 		Juego juego = new Juego();
 		juego.iniciar();
 	}
+	
 	private synchronized void iniciar(){
 		enFuncionamiento=true;
 		thread = new Thread(this,"Graficos");
 		thread.start();
 	}
+	
 	private synchronized void detener(){
 		enFuncionamiento=false;
 		
@@ -52,12 +59,32 @@ public class Juego extends Canvas implements Runnable{
 		}
 		
 	}
+	
 	private void actualizar(){
+		teclado.actualizar();
+		if(teclado.arriba){
+			
+		}
+		
+		if(teclado.abajo){
+			
+		}
+		
+		if(teclado.derecha){
+			
+		}
+		
+		if(teclado.izquierda){
+			
+		}
+		
 		aps++;
 	}
+	
 	private void mostrar(){
 		fps++;
 	}
+	
 	public void run() {
 		final int NS_POR_SEGUNDO=1000000000;
 		final byte APS_OBJETIVO=60;
@@ -68,6 +95,9 @@ public class Juego extends Canvas implements Runnable{
 		
 		double tiempoTranscurrido;
 		double delta= 0;
+		
+		requestFocus();
+		
 		while(enFuncionamiento){
 			final long inicioBucle = System.nanoTime();
 			tiempoTranscurrido= inicioBucle - referenciaAactualizacion;
