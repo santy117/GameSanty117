@@ -9,6 +9,11 @@ public class HojaSprites {
 	private final int ancho;
 	private final int alto;
 	public final int[] pixeles;
+	
+	//Coleccion de hojas de sprites
+	public static HojaSprites hojaSprites1 = new HojaSprites("/Texturas/hoja1Sprites.png", 320, 320);
+	
+	//Fin de la colección
 
 	public HojaSprites(final String ruta, final int ancho, final int alto){
 		this.ancho=ancho;

@@ -3,11 +3,16 @@ package juego;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
 import control.*;
+import graficos.Pantalla;
 
 public class Juego extends Canvas implements Runnable{
 	private static final long serialVersionUID= 1L;
@@ -17,14 +22,22 @@ public class Juego extends Canvas implements Runnable{
 	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private static int aps=0;
 	private static int fps=0;
+	private static int x = 0;
+	private static int y = 0;
 	private static JFrame ventana;
 	private static Thread thread;
 	private static Teclado teclado;
+	private static Pantalla pantalla;
+	private static BufferedImage imagen = new BufferedImage(screenSize.width, screenSize.height, BufferedImage.TYPE_INT_RGB);
+	public static int[] pixels = ((DataBufferInt)imagen.getRaster().getDataBuffer()).getData();
 
 	
 	private Juego(){
 		
 		setPreferredSize(screenSize);
+		
+		pantalla = new Pantalla(screenSize.width, screenSize.height);
+		
 		ventana = new JFrame(NOMBRE);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setResizable(false);
@@ -63,25 +76,46 @@ public class Juego extends Canvas implements Runnable{
 	private void actualizar(){
 		teclado.actualizar();
 		if(teclado.arriba){
-			
+			y++;
 		}
 		
 		if(teclado.abajo){
-			
+			y--;
 		}
 		
 		if(teclado.derecha){
-			
+			x++;
 		}
 		
 		if(teclado.izquierda){
-			
+			x--;
 		}
 		
 		aps++;
 	}
 	
 	private void mostrar(){
+		BufferStrategy estrategia = getBufferStrategy();
+		
+		if(estrategia ==null){
+			createBufferStrategy(3);
+			return;
+		}
+		pantalla.limpiar();
+		pantalla.mostrar(x, y);
+		
+		System.arraycopy(pantalla.pixels, 0, pixels, 0, pixels.length);
+		//		Este metodo hace lo mismo que el bucle
+		//		for(int i=0; i<pixels.length; i++){
+		//			pixels[i] = pantalla.pixels[i];
+		//		}
+		
+		Graphics g = estrategia.getDrawGraphics();
+		g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);
+		g.dispose();
+		
+		estrategia.show();
+		
 		fps++;
 	}
 	
