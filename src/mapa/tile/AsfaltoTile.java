@@ -10,6 +10,6 @@ public class AsfaltoTile extends Tile{
 	}
 	
 	public void mostrar(int x, int y, Pantalla pantalla){
-		
+		pantalla.mostrarTile(x, y, this);
 	}
 }

@@ -3,10 +3,10 @@ package mapa;
 import graficos.Pantalla;
 
 public abstract class Mapa {
-	private int ancho;
-	private int alto;
+	protected int ancho;
+	protected int alto;
 	
-	private int[] tiles;
+	protected int[] tiles;
 	
 	public Mapa(int ancho, int alto){
 		this.ancho = ancho;
@@ -20,7 +20,7 @@ public abstract class Mapa {
 		cargarMapa(ruta);
 	}
 	
-	public void generarMapa(){
+	protected void generarMapa(){
 		
 	}
 	
@@ -33,6 +33,11 @@ public abstract class Mapa {
 	}
 	
 	public void mostrar(int compensacionX, int compensacionY, Pantalla pantalla){
+		//Codigo que se sustituira
+		int oeste = compensacionX >>5;	//Se mueve hacia la derecha 5 posiciones "divide entre 32"
+		int este = (compensacionX+pantalla.getAncho())>>5;
+		int norte = compensacionY>>5;
+		int sur = (compensacionY+pantalla.getAlto())>>5;
 		
 	}
 

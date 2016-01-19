@@ -5,7 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Toolkit;
+//import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -21,7 +21,7 @@ public class Juego extends Canvas implements Runnable{
 	
 	private static volatile boolean enFuncionamiento=false;
 	private static final String NOMBRE = "Juego";
-	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private static final Dimension screenSize = new Dimension(800, 600); //Toolkit.getDefaultToolkit().getScreenSize();
 	private static int aps=0;
 	private static int fps=0;
 	private static int x = 0;
