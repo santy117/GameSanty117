@@ -2,6 +2,7 @@ package juego;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -9,6 +10,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import control.*;
@@ -29,6 +31,7 @@ public class Juego extends Canvas implements Runnable{
 	private static Teclado teclado;
 	private static Pantalla pantalla;
 	private static BufferedImage imagen = new BufferedImage(screenSize.width, screenSize.height, BufferedImage.TYPE_INT_RGB);
+	private static final ImageIcon icono = new ImageIcon(Juego.class.getResource("/Iconos/iconoPrueba.png"));
 	public static int[] pixels = ((DataBufferInt)imagen.getRaster().getDataBuffer()).getData();
 
 	
@@ -41,6 +44,7 @@ public class Juego extends Canvas implements Runnable{
 		ventana = new JFrame(NOMBRE);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setResizable(false);
+		ventana.setIconImage(icono.getImage());
 		ventana.setLayout(new BorderLayout());
 		ventana.add(this,BorderLayout.CENTER);
 		ventana.pack();
@@ -112,6 +116,8 @@ public class Juego extends Canvas implements Runnable{
 		
 		Graphics g = estrategia.getDrawGraphics();
 		g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);
+		g.setColor(Color.WHITE);
+		g.drawRect(screenSize.width/2, screenSize.height/2, 15, 15);
 		g.dispose();
 		
 		estrategia.show();
