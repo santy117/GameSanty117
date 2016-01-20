@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import control.*;
 import graficos.Pantalla;
 import graficos.Sprite;
+import mapa.Mapa;
+import mapa.MapaGenerado;
 import mapa.tile.Tile;
 
 public class Juego extends Canvas implements Runnable{
@@ -36,14 +38,14 @@ public class Juego extends Canvas implements Runnable{
 	private static BufferedImage imagen = new BufferedImage(screenSize.width, screenSize.height, BufferedImage.TYPE_INT_RGB);
 	private static final ImageIcon icono = new ImageIcon(Juego.class.getResource("/Iconos/iconoPrueba.png"));
 	public static int[] pixels = ((DataBufferInt)imagen.getRaster().getDataBuffer()).getData();
-
+	private static Mapa mapa;
 	
 	private Juego(){
 		
 		setPreferredSize(screenSize);
 		
 		pantalla = new Pantalla(screenSize.height, screenSize.width);
-		
+		mapa = new MapaGenerado(128, 128);
 		ventana = new JFrame(NOMBRE);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setResizable(false);
@@ -55,6 +57,7 @@ public class Juego extends Canvas implements Runnable{
 		ventana.setVisible(true);
 		teclado = new Teclado();
 		addKeyListener(teclado);
+				//Los numeros de este constructor son los tiles que tiene de ancho y alto
 		
 		}
 	
@@ -83,11 +86,11 @@ public class Juego extends Canvas implements Runnable{
 	private void actualizar(){
 		teclado.actualizar();
 		if(teclado.arriba){
-			y++;
+			y--;
 		}
 		
 		if(teclado.abajo){
-			y--;
+			y++;
 		}
 		
 		if(teclado.derecha){
@@ -109,13 +112,9 @@ public class Juego extends Canvas implements Runnable{
 			return;
 		}
 		pantalla.limpiar();
-		pantalla.mostrar(x, y);
+		mapa.mostrar(x, y, pantalla);
 		
 		System.arraycopy(pantalla.pixels, 0, pixels, 0, pixels.length);
-		//		Este metodo hace lo mismo que el bucle
-		//		for(int i=0; i<pixels.length; i++){
-		//			pixels[i] = pantalla.pixels[i];
-		//		}
 		
 		Graphics g = estrategia.getDrawGraphics();
 		g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);

@@ -22,7 +22,7 @@ public abstract class Tile {
 	}
 
 	public void mostrar(int x, int y, Pantalla pantalla){
-		
+		pantalla.mostrarTile(x<<5, y<<5, this);
 	}
 	
 	public boolean solido(){

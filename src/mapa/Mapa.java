@@ -34,11 +34,18 @@ public abstract class Mapa {
 	}
 	
 	public void mostrar(int compensacionX, int compensacionY, Pantalla pantalla){
+		pantalla.setDiferencia(compensacionX, compensacionY);
 		//Codigo que se sustituira
 		int oeste = compensacionX >>5;	//Se mueve hacia la derecha 5 posiciones "divide entre 32"
 		int este = (compensacionX+pantalla.getAncho())>>5;
 		int norte = compensacionY>>5;
 		int sur = (compensacionY+pantalla.getAlto())>>5;
+		
+		for(int y=norte; y<sur; y++){
+			for(int x=oeste; x<este; x++){
+				getTile(x,y).mostrar(x, y, pantalla);
+			}
+		}
 		
 	}
 
@@ -46,6 +53,10 @@ public abstract class Mapa {
 		switch(x+y*ancho){
 			case 0: 
 				return Tile.asfalto;
+			case 1:
+				return Tile.espacio;
+			case 2: 
+				return Tile.nave;
 			default:
 				return Tile.vacio;
 		}
