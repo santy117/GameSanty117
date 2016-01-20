@@ -7,15 +7,25 @@ public final class Sprite {
 	private int y;
 	
 	public int[] pixeles;
-	private final HojaSprites hoja;
+	private HojaSprites hoja;
 	
 	//Coleccion de sprites
-	public static Sprite asfalto = new Sprite(96, 0, 0, HojaSprites.hojaSprites1);
+	public static Sprite asfalto = new Sprite(32, 0, 0, HojaSprites.hojaSprites1);
+	public static Sprite espacio = new Sprite(32, 2, 0, HojaSprites.hojaSprites1);
+	public static Sprite nave = new Sprite(32, 1, 0, HojaSprites.hojaSprites1);
+	public static Sprite vacio = new Sprite(32, 0);
 	
 	//Fin de la coleccion
 	
-	public Sprite(final int lado,final int columna,final int fila,
-			final HojaSprites hoja){
+	public Sprite(final int lado, final int color){
+		this.lado = lado;
+		pixeles = new int[lado*lado];
+		for(int i=0; i< pixeles.length; i++){
+			pixeles[i] = color;
+		}
+	}
+	
+	public Sprite(final int lado, final int columna, final int fila, final HojaSprites hoja){
 		this.lado=lado;
 		
 		pixeles= new int[lado*lado];
@@ -25,8 +35,7 @@ public final class Sprite {
 		this.hoja=hoja;
 		for (int y=0;y<lado;y++){
 			for(int x=0;x<lado;x++){
-				pixeles[x + y * lado]= hoja.pixeles[(x+this.x)
-				   +(y+this.y)* hoja.getAncho()];
+				pixeles[x + y * lado]= hoja.pixeles[(x+this.x)+(y+this.y)* hoja.getAncho()];
 			}
 		}
 	}

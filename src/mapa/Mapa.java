@@ -1,6 +1,7 @@
 package mapa;
 
 import graficos.Pantalla;
+import mapa.tile.Tile;
 
 public abstract class Mapa {
 	protected int ancho;
@@ -41,4 +42,12 @@ public abstract class Mapa {
 		
 	}
 
+	public Tile getTile(final int x, final int y){
+		switch(x+y*ancho){
+			case 0: 
+				return Tile.asfalto;
+			default:
+				return Tile.vacio;
+		}
+	}
 }
